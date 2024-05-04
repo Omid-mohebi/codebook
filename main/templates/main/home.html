@@ -1,6 +1,14 @@
 {% extends "base.html" %} 
+{% include "navbar.html" %}
 {% block content %}
+<a href="{% url "create-group" %}">Create Group</a>
+<hr>
 {% for group in groups %}
+    <a href="{% url 'edit-group' group.id %}">Edit</a>
+    <a href="">Delete</a>
+    <span>@{{group.host.username}}</span>
     <h2>{{group.id}}-- <a href="{% url 'group-veiw' group.id %}">{{group.name}}</a></h2>
+    <small>{{group.topic.name}}</small>
+    <hr>
 {% endfor %}
 {% endblock content %}
