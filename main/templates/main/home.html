@@ -1,4 +1,6 @@
 {% extends "base.html" %} 
 {% block content %}
-<h1>main home</h1>
+{% for group in groups %}
+    <h2>{{group.id}}-- <a href="{% url 'group-veiw' group.id %}">{{group.name}}</a></h2>
+{% endfor %}
 {% endblock content %}
