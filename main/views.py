@@ -1,11 +1,19 @@
 from django.shortcuts import render, redirect
 # from django.http import HttpResponse
-from .models import Group
+from .models import Group, Topic
 from .form import Custom_form
+from django.db.models import Q
 
 def home (request):
-    groups = Group.objects.all()
-    return render(request, 'main/home.html', {'groups':groups})
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+
+    groups = Group.objects.filter(
+        Q(topic__name__icontains=q) |
+        Q(name__icontains=q) |
+        Q(discription__icontains=q)
+    )
+    topics = Topic.objects.all()
+    return render(request, 'main/home.html', {'groups':groups, 'topics': topics})
 
 def group (request, pk):
     group = Group.objects.get(id=pk)
@@ -29,3 +37,10 @@ def edit_group(request, pk):
             form.save()
             return redirect('main-home')
     return render(request, 'main/edit_group.html', {'form': form})
+
+def delete_group(request, pk):
+    group = Group.objects.get(id=pk)
+    if request.method == 'POST':
+        group.delete()
+        return redirect('main-home')
+    return render(request, 'main/delete_group.html', {'obj': group.name})
