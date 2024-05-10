@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    {% for message in messages  %}
+        {% if messages %}
+            <ul>
+                <li>{{message}}</li>
+            </ul>
+        {% endif %}
+    {% endfor %}
+    {{form}}
+    <input type="submit" value="Sign up">
+    <a href="{% url 'login' %}">Already have an account?</a>
+</form>
+{% endblock content %}
