@@ -20,11 +20,11 @@
         <p>Total {{group_count}} Groups Found Near You</p>
         <hr>
         {% for group in groups %}
+        <span>@{{group.host.username}}</span>
             {% if request.user == group.host %}
                 <a href="{% url 'edit-group' group.id %}">Edit</a>
                 <a href="{% url 'delete-group' group.id %}">Delete</a>
             {% endif %}
-            <span>@{{group.host.username}}</span>
             <h2>{{group.id}}-- <a href="{% url 'group-veiw' group.id %}">{{group.name}}</a></h2>
             <small>{{group.topic.name}}</small>
             <hr>

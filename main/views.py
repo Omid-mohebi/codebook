@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 # from django.http import HttpResponse
-from .models import Group, Topic
+from .models import Group, Topic, Message
 from .form import Custom_form
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -64,13 +64,20 @@ def register(request):
 
 def group (request, pk):
     group = Group.objects.get(id=pk)
-    return render(request, 'main/group.html', {'group': group})
+    messages = group.message_set.all().order_by('-created')
+    participants = group.participants.all()
+
+    if request.method == 'POST':
+        message = Message.objects.create(
+            sender = request.user,
+            group = group,
+            body = request.POST.get('comment'),
+        )
+        return redirect('group-veiw', pk=group.id)
+    return render(request, 'main/group.html', {'group': group, 'messages': messages, 'participants': participants})
 
 @login_required(login_url='login')
 def create_group (request):
-
-    # if request.user != 
-
     form = Custom_form()
     if request.method == 'POST':
         form = Custom_form(request.POST)
