@@ -1,0 +1,12 @@
+<h3>Recent Activities</h3>
+{% for msg in msgs %}
+<small
+  >@{{msg.sender}} {{msg.created|timesince }} ago replied to
+  "{{msg.group.name}}"</small
+>
+<p>{{msg.body}}</p>
+{% if request.user == msg.sender %}
+<a href="{% url 'delete-message' msg.group.id msg.id %}">Delete</a>
+{% endif %}
+<hr />
+{% endfor %}

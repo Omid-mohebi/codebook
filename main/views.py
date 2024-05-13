@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-# from django.http import HttpResponse
 from .models import Group, Topic, Message
 from .form import Custom_form
 from django.db.models import Q
@@ -8,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 def home (request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
@@ -20,9 +19,16 @@ def home (request):
         Q(host__username__icontains=q)
     )
 
-
+    msgs = []
+    for group in groups:
+        msgs+=group.message_set.all()
     topics = Topic.objects.all()
-    return render(request, 'main/home.html', {'groups':groups, 'topics': topics, 'group_count': groups.count()})
+    return render(request, 'main/home.html', {
+        'groups':groups, 
+        'topics': topics, 
+        'group_count': groups.count(),
+        'msgs': msgs,
+        })
 
 def login_veiw(request):
 
@@ -64,10 +70,12 @@ def register(request):
 
 def group (request, pk):
     group = Group.objects.get(id=pk)
-    messages = group.message_set.all().order_by('-created')
+    messages = group.message_set.all().order_by('created')
     participants = group.participants.all()
-
+    print(messages)
     if request.method == 'POST':
+        if request.user not in participants:
+            group.participants.add(request.user)
         message = Message.objects.create(
             sender = request.user,
             group = group,
@@ -106,3 +114,25 @@ def delete_group(request, pk):
         group.delete()
         return redirect('main-home')
     return render(request, 'main/delete_group.html', {'obj': group.name})
+
+def delete_message(request, pk1, pk2):
+    group = Group.objects.get(id=pk1)
+    if group.message_set.get(id=pk2):
+        message = group.message_set.get(id=pk2)
+    if request.user != message.sender: return HttpResponse('<h1>You are not alowed here!</h1>')
+    if request.method == 'POST':
+        message.delete()
+        return redirect('main-home')
+    return render(request, 'main/delete_message.html', {'obj': message.body})
+
+def users_profile (request, pk):
+    groups = request.user.group_set.all()
+    topics = Topic.objects.all()
+    msgs = request.user.message_set.all()
+
+    return render(request, 'main/users_profile.html', {
+        'groups':groups, 
+        'topics': topics, 
+        'group_count': groups.count(),
+        'msgs': msgs,
+    })

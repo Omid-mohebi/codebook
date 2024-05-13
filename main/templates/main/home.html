@@ -1,36 +1,14 @@
-{% extends "base.html" %} 
-{% comment %} {% include "navbar.html" %} {% endcomment %}
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <style>
-    .main-div{
-        display: grid;
-        grid-template-columns: 1fr 3fr;
-    }
+  .main-div {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+  }
 </style>
-<div class='main-div'>
-    <div>
-        <h3>Brouse Topics</h3>
-        <a href="{% url 'main-home' %}"><h4>All</h4></a>
-        {% for topic in topics %}
-        <a href="{% url 'main-home' %}?q={{topic.name}}"><h4>{{topic}}</h4></a>
-        {% endfor %}
-    </div>
-    <div>
-        <a href="{% url "create-group" %}">Create Group</a>
-        <p>Total {{group_count}} Groups Found Near You</p>
-        <hr>
-        {% for group in groups %}
-        <span>@{{group.host.username}}</span>
-            {% if request.user == group.host %}
-                <a href="{% url 'edit-group' group.id %}">Edit</a>
-                <a href="{% url 'delete-group' group.id %}">Delete</a>
-            {% endif %}
-            <h2>{{group.id}}-- <a href="{% url 'group-veiw' group.id %}">{{group.name}}</a></h2>
-            <small>{{group.topic.name}}</small>
-            <hr>
-        {% endfor %}
-    </div>
-    {% comment %} <div>hi</div> {% endcomment %}
+<div class="main-div">
+  <div>{% include "main/components/topics.html" %}</div>
+  <div>{% include "main/components/feed.html" %}</div>
+  <div>{% include "main/components/recent_activity.html" %}</div>
 </div>
 
 {% endblock content %}

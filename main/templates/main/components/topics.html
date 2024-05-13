@@ -1,0 +1,5 @@
+<h3>Brouse Topics</h3>
+<a href="{% url 'main-home' %}"><h4>All</h4></a>
+{% for topic in topics %}
+<a href="{% url 'main-home' %}?q={{topic.name}}"><h4>{{topic}}</h4></a>
+{% endfor %}

@@ -1,0 +1,13 @@
+<a href="{% url "create-group" %}">Create Group</a>
+<p>Total {{group_count}} Groups Found Near You</p>
+<hr>
+{% for group in groups %}
+<span><a href="{% url 'users-profile' group.host.id %}">@{{group.host.username}}</a></span>
+    {% if request.user == group.host %}
+        <a href="{% url 'edit-group' group.id %}">Edit</a>
+        <a href="{% url 'delete-group' group.id %}">Delete</a>
+    {% endif %}
+    <h2>{{group.id}}-- <a href="{% url 'group-veiw' group.id %}">{{group.name}}</a></h2>
+    <small>{{group.topic.name}}</small>
+    <hr>
+{% endfor %}
