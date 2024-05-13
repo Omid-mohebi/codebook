@@ -126,9 +126,10 @@ def delete_message(request, pk1, pk2):
     return render(request, 'main/delete_message.html', {'obj': message.body})
 
 def users_profile (request, pk):
-    groups = request.user.group_set.all()
+    user = User.objects.get(id=pk)
+    groups = user.group_set.all()
     topics = Topic.objects.all()
-    msgs = request.user.message_set.all()
+    msgs = user.message_set.all()
 
     return render(request, 'main/users_profile.html', {
         'groups':groups, 
