@@ -5,4 +5,4 @@ class Custom_form (ModelForm):
     class Meta:
         model = Group
         fields = '__all__'
-        # exclude = None
+        exclude = ['host', 'participants']

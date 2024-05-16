@@ -1,14 +1,32 @@
-{% extends "base.html" %} {% block content %}
-<style>
-  .main-div {
-    display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-  }
-</style>
-<div class="main-div">
-  <div>{% include "main/components/topics.html" %}</div>
-  <div>{% include "main/components/feed.html" %}</div>
-  <div>{% include "main/components/recent_activity.html" %}</div>
-</div>
+{% extends "base.html" %} 
+{% block content %}
 
+
+
+<body>
+  
+  <main class="layout layout--3">
+    <div class="container">
+      <!-- Topics Start -->
+      <div class="topics">
+        {% include "main/components/topics.html" %}
+        
+      </div>
+      <!-- Topics End -->
+
+      <!-- Room List Start -->
+      <div class="roomList">
+        {% include "main/components/feed.html" %}
+      </div>
+      <!-- Room List End -->
+
+      <!-- Activities Start -->
+      <div class="activities">
+        {% include "main/components/recent_activity.html" %}
+      </div>
+      <!-- Activities End -->
+    </div>
+  </main>
+  <script src="script.js"></script>
+</body>
 {% endblock content %}

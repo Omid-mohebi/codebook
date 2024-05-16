@@ -72,7 +72,7 @@ def group (request, pk):
     group = Group.objects.get(id=pk)
     messages = group.message_set.all().order_by('created')
     participants = group.participants.all()
-    print(messages)
+    # print(messages)
     if request.method == 'POST':
         if request.user not in participants:
             group.participants.add(request.user)
@@ -90,7 +90,10 @@ def create_group (request):
     if request.method == 'POST':
         form = Custom_form(request.POST)
         if(form.is_valid): 
-            form.save()
+            temp_form = form.save(commit=False)
+            temp_form.host = request.user
+            # temp_form.participants = temp_form.participants.add(request.user)
+            temp_form.save()
             return redirect('main-home')
     return render(request, 'main/create_form.html', {'form': form})
 
@@ -132,6 +135,7 @@ def users_profile (request, pk):
     msgs = user.message_set.all()
 
     return render(request, 'main/users_profile.html', {
+        'user': user,
         'groups':groups, 
         'topics': topics, 
         'group_count': groups.count(),

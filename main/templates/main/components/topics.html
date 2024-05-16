@@ -1,5 +1,35 @@
+{% comment %}
 <h3>Brouse Topics</h3>
-<a href="{% url 'main-home' %}"><h4>All</h4></a>
+{% endcomment %} {% comment %}
+<a href="{% url 'main-home' %}"><h4>All</h4></a> {% endcomment %} {% comment %}
 {% for topic in topics %}
 <a href="{% url 'main-home' %}?q={{topic.name}}"><h4>{{topic}}</h4></a>
-{% endfor %}
+{% endfor %} {% endcomment %}
+<div class="topics__header">
+  <h2>Browse Topics</h2>
+</div>
+<ul class="topics__list">
+  <li>
+    <a href="{% url 'main-home' %}" class="active">All <span>553</span></a>
+  </li>
+  {% for topic in topics %}
+  <li>
+    <a href="{% url 'main-home' %}?q={{topic.name}}"
+      >{{topic}} <span>232</span></a
+    >
+  </li>
+  {% endfor %}
+  <a class="btn btn--link" href="topics.html">
+    More
+    <svg
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+    >
+      <title>chevron-down</title>
+      <path d="M16 21l-13-13h-3l16 16 16-16h-3l-13 13z"></path>
+    </svg>
+  </a>
+</ul>
