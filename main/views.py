@@ -11,6 +11,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 def home (request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
+    all_count = Group.objects.all().count()
 
     groups = Group.objects.filter(
         Q(topic__name__icontains=q) |
@@ -28,6 +29,7 @@ def home (request):
         'topics': topics, 
         'group_count': groups.count(),
         'msgs': msgs,
+        'all': all_count,
         })
 
 def login_veiw(request):
@@ -94,6 +96,7 @@ def create_group (request):
             temp_form.host = request.user
             # temp_form.participants = temp_form.participants.add(request.user)
             temp_form.save()
+            temp_form= Custom_form(temp_form, temp_form.participants.add(request.user))
             return redirect('main-home')
     return render(request, 'main/create_form.html', {'form': form})
 
@@ -133,6 +136,7 @@ def users_profile (request, pk):
     groups = user.group_set.all()
     topics = Topic.objects.all()
     msgs = user.message_set.all()
+    all_count = Group.objects.all().count()
 
     return render(request, 'main/users_profile.html', {
         'user': user,
@@ -140,4 +144,5 @@ def users_profile (request, pk):
         'topics': topics, 
         'group_count': groups.count(),
         'msgs': msgs,
+        'all': all_count,
     })

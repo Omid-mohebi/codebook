@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block content %}
+<style>
+  .main-div {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+  }
+</style>
+<h2>@{{user.username}}</h2>
+<div class="main-div">
+  <div>{% include "main/components/topics.html" %}</div>
+  <div>{% include "main/components/feed.html" %}</div>
+  <div>{% include "main/components/recent_activity.html" %}</div>
+</div>
+
+{% endblock content %}
