@@ -1,19 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<form action="" method="post">
-    {% csrf_token %}
-    {{form}}
-    <input type="submit" value='submit'>
-</form>
-=======
-
-<main class="create-room layout">
-=======
 
 <main class="create-group layout">
->>>>>>> d2900951d0cf7c855a1f308126649cdd5db24144
   <div class="container">
     <div class="layout__box">
       <div class="layout__boxHeader">
@@ -33,15 +21,9 @@
             </svg>
           </a>
           {% if update %}
-<<<<<<< HEAD
-            <h3>Upadte Study Room</h3>
-            {% else %}
-            <h3>Create Study Room</h3>
-=======
-            <h3>Upadte Study Group</h3>
+            <h3>Update Study Group</h3>
             {% else %}
             <h3>Create Study Group</h3>
->>>>>>> d2900951d0cf7c855a1f308126649cdd5db24144
             {% endif %}
         </div>
       </div>
@@ -49,17 +31,10 @@
         <form class="form" action="" method="post">
           {% csrf_token %}
           <div class="form__group">
-<<<<<<< HEAD
-            <label for="room_topic">Topic</label>
-            <input required type="text" name="topic" list="topic" value='{{topic}}'>
-            <datalist id="topic">
-              <select name="" id="room_topic">
-=======
             <label for="group_topic">Topic</label>
             <input required type="text" name="topic" list="topic" value='{{topic}}'>
             <datalist id="topic">
               <select name="" id="group_topic">
->>>>>>> d2900951d0cf7c855a1f308126649cdd5db24144
                 {% for topic in topics %}
                   <option>{{topic}}</option>
                 {% endfor %}
@@ -68,20 +43,12 @@
           </div>
 
           <div class="form__group">
-<<<<<<< HEAD
-            <label for="room_name">Group Name</label>
-=======
             <label for="group_name">Group Name</label>
->>>>>>> d2900951d0cf7c855a1f308126649cdd5db24144
             <input required type="text" name="name" value='{{name}}'>
           </div>
 
           <div class="form__group">
-<<<<<<< HEAD
-            <label for="room_discription">Discription</label>
-=======
-            <label for="group_discription">Discription</label>
->>>>>>> d2900951d0cf7c855a1f308126649cdd5db24144
+            <label for="group_discription">Description</label>
             <input type="text" name="discription" value='{{discription}}'>
           </div>
 
@@ -99,8 +66,4 @@
   </div>
 </main>
 
-<<<<<<< HEAD
->>>>>>> parent of d290095 (update: crrecting class and namings)
-=======
->>>>>>> d2900951d0cf7c855a1f308126649cdd5db24144
 {% endblock content %}
