@@ -33,10 +33,10 @@
 <body>
   <main class="profile-page layout layout--2">
     <div class="container">
-      <!-- Room Start -->
-      <div class="room">
-        <div class="room__top">
-          <div class="room__topLeft">
+      <!-- Group Start -->
+      <div class="group">
+        <div class="group__top">
+          <div class="group__topLeft">
             <a href="{% url "main-home" %}">
               <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                 <title>arrow-left</title>
@@ -45,10 +45,10 @@
                 ></path>
               </svg>
             </a>
-            <h3>Study Room</h3>
+            <h3>Study Group</h3>
           </div>
           {% if request.user == group.host %}
-          <div class="room__topRight">
+          <div class="group__topRight">
             <a href="{% url "edit-group" group.id %}">
               <svg
                 enable-background="new 0 0 24 24"
@@ -101,27 +101,27 @@
           </svg>
         </button> -->
         </div>
-        <div class="room__box scroll">
-          <div class="room__header scroll">
-            <div class="room__info">
+        <div class="group__box scroll">
+          <div class="group__header scroll">
+            <div class="group__info">
               <h3>{{group.name}}</h3>
               <span>{{group.created|timesince}} ago</span>
             </div>
-            <div class="room__hosted">
+            <div class="group__hosted">
               <p>Hosted By</p>
-              <a href="{% url "users-profile" group.host.id %}" class="room__author">
+              <a href="{% url "users-profile" group.host.id %}" class="group__author">
                 <div class="avatar avatar--small">
                   <img src="https://randomuser.me/api/portraits/men/37.jpg" />
                 </div>
                 <span>@{{group.host.username}}</span>
               </a>
             </div>
-            <div class="room__details">
+            <div class="group__details">
               {{group.discription}}
             </div>
-            <span class="room__topics">{{group.topic.name}}</span>
+            <span class="group__topics">{{group.topic.name}}</span>
           </div>
-          <div class="room__conversation">
+          <div class="group__conversation">
             <div class="threads scroll">
               {% for message in messages %}
               <div class="thread">
@@ -156,14 +156,14 @@
             </div>
           </div>
         </div>
-        <div class="room__message">
+        <div class="group__message">
           <form action="" method="post">
             {% csrf_token %}
             <input name="comment" placeholder="Write your message here..." />
           </form>
         </div>
       </div>
-      <!-- Room End -->
+      <!-- Group End -->
 
       <!--   Start -->
       <div class="participants">

@@ -89,28 +89,33 @@ def group (request, pk):
 @login_required(login_url='login')
 def create_group (request):
     form = Custom_form()
+    topics = Topic.objects.all()
     if request.method == 'POST':
         form = Custom_form(request.POST)
-        if(form.is_valid): 
-            temp_form = form.save(commit=False)
-            temp_form.host = request.user
-            # temp_form.participants = temp_form.participants.add(request.user)
-            temp_form.save()
-            temp_form= Custom_form(temp_form, temp_form.participants.add(request.user))
-            return redirect('main-home')
-    return render(request, 'main/create_form.html', {'form': form})
+        topic, created = Topic.objects.get_or_create(name=request.POST.get('topic'))
+        Group.objects.create(
+            host = request.user,
+            topic = topic,
+            name = request.POST.get('name'),
+            discription = request.POST.get('discription'),
+        )
+        return redirect('main-home')
+    return render(request, 'main/create_form.html', {'form': form, 'topics': topics})
 
 @login_required(login_url='login')
 def edit_group(request, pk):
     group = Group.objects.get(id=pk)
     form = Custom_form(instance=group)
     if request.user != group.host: return HttpResponse('<h1>You are not alowed here!</h1>')
+    # print('testtttttt')
     if request.method == 'POST':
-        form = Custom_form(request.POST, instance=group)
-        if(form.is_valid): 
-            form.save()
-            return redirect('main-home')
-    return render(request, 'main/edit_group.html', {'form': form})
+        topic, created = Topic.objects.get_or_create(name=request.POST.get('topic'))
+        group.name = request.POST.get('name')
+        group.topic = topic
+        group.discription = request.POST.get('discription')
+        group.save()
+        return redirect('main-home')
+    return render(request, 'main/create_form.html', {'name': group.name, 'topic': group.topic, 'discription': group.discription, 'update': True})
 
 @login_required(login_url='login')
 def delete_group(request, pk):
