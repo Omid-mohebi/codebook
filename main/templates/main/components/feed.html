@@ -23,28 +23,27 @@
 </div>
 
 {% for group in groups %}
-<div class="groupListGroup">
-  <div class="groupListGroup__header">
-    <a
-      href="{% url 'users-profile' group.host.id %}"
-      class="groupListGroup__author"
-    >
-      <div class="avatar avatar--small">
+<div class="roomListRoom">
+    <div class="roomListRoom__header">
+    <a href="{% url 'users-profile' group.host.id %}" class="roomListRoom__author">
+        <div class="avatar avatar--small">
         <img src="https://randomuser.me/api/portraits/women/11.jpg" />
       </div>
       <span>@{{group.host.username}}</span>
     </a>
-    <div class="groupListGroup__actions">
-      <span>{{group.created|timesince}} ago</span>
+    <div class="roomListRoom__actions">
+        <span>{{group.created|timesince}} ago</span>
     </div>
   </div>
-  <div class="groupListGroup__content">
+    <div class="roomListRoom__content">
     <a href="{% url 'group-veiw' group.id %}">{{group.name}}</a>
-    <p>{{group.discription}}</p>
-  </div>
-  <div class="groupListGroup__meta">
-    <a href="group.html" class="groupListGroup__joined">
-      <svg
+     <p>
+        {{group.discription}}
+    </p>
+    </div>
+    <div class="roomListRoom__meta">
+    <a href="room.html" class="roomListRoom__joined">
+        <svg
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
         width="32"
@@ -67,7 +66,7 @@
       </svg>
       {{group.participants.count}} Joined
     </a>
-    <p class="groupListGroup__topic">{{group.topic.name}}</p>
+    <p class="roomListRoom__topic">{{group.topic.name}}</p>
   </div>
 </div>
 {% endfor %}
