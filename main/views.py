@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Group, Topic, Message
-from .form import Custom_form
+from .form import Custom_form, Update_user_form
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -107,7 +107,6 @@ def edit_group(request, pk):
     group = Group.objects.get(id=pk)
     form = Custom_form(instance=group)
     if request.user != group.host: return HttpResponse('<h1>You are not alowed here!</h1>')
-    # print('testtttttt')
     if request.method == 'POST':
         topic, created = Topic.objects.get_or_create(name=request.POST.get('topic'))
         group.name = request.POST.get('name')
@@ -124,12 +123,11 @@ def delete_group(request, pk):
     if request.method == 'POST':
         group.delete()
         return redirect('main-home')
-    return render(request, 'main/delete_group.html', {'obj': group.name})
+    return render(request, 'main/delete_message.html', {'obj': group.name})
 
-def delete_message(request, pk1, pk2):
-    group = Group.objects.get(id=pk1)
-    if group.message_set.get(id=pk2):
-        message = group.message_set.get(id=pk2)
+def delete_message(request, pk):
+    if Message.objects.get(id=pk):
+        message = Message.objects.get(id=pk)
     if request.user != message.sender: return HttpResponse('<h1>You are not alowed here!</h1>')
     if request.method == 'POST':
         message.delete()
@@ -151,3 +149,15 @@ def users_profile (request, pk):
         'msgs': msgs,
         'all': all_count,
     })
+
+@login_required(login_url='login')
+def update_profile (request):
+    user = User.objects.get(id=request.user.id)
+    form = Update_user_form(instance=user)
+    if request.method == 'POST':
+        form = Update_user_form(request.POST, instance=user)
+        if form.is_valid:
+            form.save()
+            return redirect('main-home')
+
+    return render(request, 'main/update_profile.html', {'form': form})

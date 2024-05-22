@@ -10,7 +10,9 @@ urlpatterns = [
     path("login/", views.login_veiw, name="login"),
     path("logout/", views.logout_veiw, name="logout"),
     path("register/", views.register, name="register"),
-    path('delete-message/<str:pk1>/<str:pk2>/', views.delete_message, name='delete-message'),
+    path('delete-message/<str:pk>/', views.delete_message, name='delete-message'),
     path('users-profile/<str:pk>/', views.users_profile, name='users-profile'),
+    path('update-profile/', views.update_profile, name='update-profile'),
+    # path('delete/', views.delete, name='delete')
 
 ]
