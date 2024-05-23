@@ -161,3 +161,13 @@ def update_profile (request):
             return redirect('main-home')
 
     return render(request, 'main/update_profile.html', {'form': form})
+
+def topics(request):
+    all_count = Group.objects.all().count()
+    q=request.GET.get('q') if request.GET.get('q') != None else ''
+    topics = Topic.objects.filter(
+        Q(name__icontains=q)
+    )
+    # topics = Topic.objects.all()
+    return render(request, 'main/mobile/topics.html', {'topics': topics, 'all': all_count})
+

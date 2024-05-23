@@ -13,6 +13,6 @@ urlpatterns = [
     path('delete-message/<str:pk>/', views.delete_message, name='delete-message'),
     path('users-profile/<str:pk>/', views.users_profile, name='users-profile'),
     path('update-profile/', views.update_profile, name='update-profile'),
-    # path('delete/', views.delete, name='delete')
+    path('topics/', views.topics, name='topics'),
 
 ]
