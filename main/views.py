@@ -23,7 +23,7 @@ def home (request):
     msgs = []
     for group in groups:
         msgs+=group.message_set.all()
-    topics = Topic.objects.all()
+    topics = Topic.objects.all()[0:4]
     return render(request, 'main/home.html', {
         'groups':groups, 
         'topics': topics, 
@@ -170,4 +170,11 @@ def topics(request):
     )
     # topics = Topic.objects.all()
     return render(request, 'main/mobile/topics.html', {'topics': topics, 'all': all_count})
+
+def recent_activity(request):
+    groups = Group.objects.all()
+    msgs = []
+    for group in groups:
+        msgs+=group.message_set.all()
+    return render(request, 'main/mobile/activity.html', {'msgs': msgs})
 

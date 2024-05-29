@@ -14,5 +14,6 @@ urlpatterns = [
     path('users-profile/<str:pk>/', views.users_profile, name='users-profile'),
     path('update-profile/', views.update_profile, name='update-profile'),
     path('topics/', views.topics, name='topics'),
+    path('activity/', views.recent_activity, name='activity'),
 
 ]

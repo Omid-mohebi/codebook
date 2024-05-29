@@ -8,6 +8,7 @@
 <div class="topics__header">
   <h2>Browse Topics</h2>
 </div>
+{% comment %} TODO: show less topics {% endcomment %}
 <ul class="topics__list">
   <li>
     <a href="{% url 'main-home' %}" class="active">All <span>{{all}}</span></a>
@@ -19,7 +20,7 @@
     >
   </li>
   {% endfor %}
-  <a class="btn btn--link" href="topics.html">
+  <a class="btn btn--link" href="{% url "topics" %}">
     More
     <svg
       version="1.1"
